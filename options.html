@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BlockZone Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .sidebar {
+      width: 260px;
+      background: #141414;
+      border-right: 1px solid #222;
+      padding: 30px 20px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    
+    .logo {
+      margin-bottom: 40px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #222;
+    }
+    
+    .logo h1 {
+      font-size: 2em;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+    
+    .brand {
+      color: #ff0066;
+    }
+    
+    .subtitle {
+      font-size: 0.75em;
+      color: #555;
+      letter-spacing: 1px;
+    }
+    
+    .nav-item {
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #999;
+      font-size: 0.95em;
+      font-weight: 500;
+    }
+    
+    .nav-item:hover {
+      background: #1a1a1a;
+      color: #fff;
+    }
+    
+    .nav-item.active {
+      background: #ff0066;
+      color: #fff;
+    }
+    
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1em;
+    }
+    
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 40px 50px;
+    }
+    
+    .page {
+      display: none;
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    .page-title {
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    
+    .page-subtitle {
+      color: #777;
+      margin-bottom: 35px;
+      font-size: 0.95em;
+    }
+    
+    .card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    
+    .card-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    
+    .card-desc {
+      color: #777;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    
+    .toggle-group {
+      display: flex;
+      gap: 0;
+      background: #0a0a0a;
+      border-radius: 10px;
+      padding: 4px;
+      border: 1px solid #222;
+    }
+    
+    .toggle-option {
+      flex: 1;
+      padding: 12px 20px;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9em;
+      font-weight: 500;
+      color: #888;
+    }
+    
+    .toggle-option.active {
+      background: #ff0066;
+      color: #fff;
+    }
+    
+    .input-wrapper {
+      position: relative;
+    }
+    
+    .input-label {
+      display: block;
+      font-size: 0.85em;
+      color: #888;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95em;
+      outline: none;
+      transition: all 0.2s;
+    }
+    
+    input:focus {
+      border-color: #ff0066;
+      box-shadow: 0 0 0 3px rgba(255, 0, 102, 0.1);
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn-primary {
+      background: #ff0066;
+      color: #fff;
+    }
+    
+    .btn-primary:hover {
+      background: #e6005c;
+    }
+    
+    .btn-secondary {
+      background: #1a1a1a;
+      color: #fff;
+      border: 1px solid #333;
+    }
+    
+    .btn-secondary:hover {
+      background: #222;
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: #ff0066;
+      border: 1px solid #ff0066;
+    }
+    
+    .btn-ghost:hover {
+      background: rgba(255, 0, 102, 0.1);
+    }
+    
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 0.85em;
+    }
+    
+    .site-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
+    .site-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .site-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .site-list::-webkit-scrollbar-thumb {
+      background: #222;
+      border-radius: 3px;
+    }
+    
+    .site-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    
+    .site-item:hover {
+      border-color: #333;
+      background: #0f0f0f;
+    }
+    
+    .site-name {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      color: #ddd;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #555;
+    }
+    
+    .empty-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+    
+    .add-site-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .add-site-form input {
+      flex: 1;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .stat-box {
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #ff0066;
+      margin-bottom: 5px;
+    }
+    
+    .stat-label {
+      font-size: 0.85em;
+      color: #777;
+    }
+    
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .preset-card {
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .preset-card:hover {
+      border-color: #ff0066;
+      background: #0f0f0f;
+    }
+    
+    .preset-card.loaded {
+      border-color: #ff0066;
+      background: rgba(255, 0, 102, 0.05);
+    }
+    
+    .preset-icon {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    
+    .preset-name {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    
+    .preset-count {
+      font-size: 0.85em;
+      color: #777;
+    }
+    
+    #password-gate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #0a0a0a;
+    }
+    
+    .password-box {
+      width: 100%;
+      max-width: 400px;
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 50px 40px;
+      text-align: center;
+    }
+    
+    .password-box h2 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    
+    .password-box p {
+      color: #777;
+      margin-bottom: 30px;
+    }
+    
+    .password-box .input-wrapper {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    .error {
+      color: #ef4444;
+      font-size: 0.9em;
+      margin-top: 15px;
+    }
+    
+    #main-content {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      
+      .main-content {
+        margin-left: 0;
+        padding: 20px;
+      }
+      
+      .preset-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="password-gate">
+    <div class="password-box">
+      <div class="logo" style="border: none; padding-bottom: 0; margin-bottom: 30px;">
+        <h1><span class="brand">Block</span>Zone</h1>
+        <div class="subtitle">by hru hru studio</div>
+      </div>
+      <h2>Welcome Back</h2>
+      <p>Enter your password to access settings</p>
+      <div class="input-wrapper">
+        <label class="input-label">Password</label>
+        <input type="password" id="passwordInput" placeholder="Enter password">
+      </div>
+      <button id="unlockBtn" class="btn btn-primary" style="width: 100%;">Unlock Settings</button>
+      <p id="passwordError" class="error"></p>
+    </div>
+  </div>
+
+  <div id="main-content">
+    <div class="app-container">
+      <div class="sidebar">
+        <div class="logo">
+          <h1><span class="brand">Block</span>Zone</h1>
+          <div class="subtitle">by hru hru studio</div>
+        </div>
+        
+        <div class="nav-item active" data-page="overview">
+          <div class="nav-icon">●</div>
+          <span>Overview</span>
+        </div>
+        <div class="nav-item" data-page="presets">
+          <div class="nav-icon">▣</div>
+          <span>Quick Presets</span>
+        </div>
+        <div class="nav-item" data-page="sites">
+          <div class="nav-icon">◆</div>
+          <span>Manage Sites</span>
+        </div>
+        <div class="nav-item" data-page="settings">
+          <div class="nav-icon">⚙</div>
+          <span>Settings</span>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="page active" id="page-overview">
+          <h1 class="page-title">Overview</h1>
+          <p class="page-subtitle">Your blocking statistics and quick actions</p>
+          
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-value" id="totalSites">0</div>
+              <div class="stat-label">Sites Blocked</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="modeDisplay">Blacklist</div>
+              <div class="stat-label">Current Mode</div>
+            </div>
+          </div>
+
+          <div class="card" id="password-setup" style="display: none;">
+            <div class="card-title">Set Security Password</div>
+            <div class="card-desc">Protect your settings from being easily changed</div>
+            <div class="input-wrapper" style="margin-bottom: 15px;">
+              <label class="input-label">New Password (min 4 characters)</label>
+              <input type="password" id="newPasswordInput" placeholder="Enter password">
+            </div>
+            <button id="setPasswordBtn" class="btn btn-primary">Set Password</button>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Quick Start</div>
+            <div class="card-desc">Browse our presets or start blocking sites manually</div>
+            <button class="btn btn-primary quick-nav" data-target="presets">Browse Presets</button>
+            <button class="btn btn-secondary quick-nav" data-target="sites" style="margin-left: 10px;">Add Sites Manually</button>
+          </div>
+        </div>
+
+        <div class="page" id="page-presets">
+          <h1 class="page-title">Quick Presets</h1>
+          <p class="page-subtitle">Load pre-configured blocklists by category</p>
+          
+          <div class="card">
+            <div class="card-title">Choose a Category</div>
+            <div class="card-desc">Click on a preset to add all sites from that category to your blocklist</div>
+            <div class="preset-grid" id="presetGrid"></div>
+          </div>
+        </div>
+
+        <div class="page" id="page-sites">
+          <h1 class="page-title">Manage Sites</h1>
+          <p class="page-subtitle">Add or remove sites from your blocklist</p>
+          
+          <div class="card">
+            <div class="card-title">Add New Site</div>
+            <div class="add-site-form">
+              <input type="text" id="manualAddInput" placeholder="example.com">
+              <button id="manualAddBtn" class="btn btn-primary">Add Site</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Blocked Sites</div>
+            <div class="card-desc" id="siteCountText">No sites blocked yet</div>
+            <div class="site-list" id="listContainer"></div>
+          </div>
+        </div>
+
+        <div class="page" id="page-settings">
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Configure how BlockZone works</p>
+          
+          <div class="card">
+            <div class="card-title">Blocking Mode</div>
+            <div class="card-desc">Choose how the extension blocks websites</div>
+            <div class="toggle-group">
+              <div class="toggle-option active" data-mode="blacklist">
+                <div style="font-weight: 600; margin-bottom: 4px;">Blacklist</div>
+                <div style="font-size: 0.85em; color: #666;">Block only listed sites</div>
+              </div>
+              <div class="toggle-option" data-mode="whitelist">
+                <div style="font-weight: 600; margin-bottom: 4px;">Whitelist</div>
+                <div style="font-size: 0.85em; color: #666;">Block all except listed</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Danger Zone</div>
+            <div class="card-desc">Permanently remove all blocked sites</div>
+            <button id="clearAllBtn" class="btn btn-ghost">Clear All Sites</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

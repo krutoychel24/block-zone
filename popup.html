@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0d0d0d;
+      color: #e0e0e0;
+    }
+    
+    .header {
+      background: #1a1a1a;
+      padding: 15px 20px;
+      text-align: center;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    
+    .header h3 {
+      font-size: 1.3em;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    
+    .brand {
+      color: #ff0066;
+    }
+    
+    .subtitle {
+      font-size: 0.7em;
+      color: #666;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    
+    .container {
+      padding: 20px;
+      background: #1a1a1a;
+    }
+    
+    h4 { 
+      margin: 0 0 15px 0;
+      color: #c0c0c0;
+      font-size: 0.95em;
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    p {
+      font-weight: 500;
+      font-size: 0.9em;
+      color: #a0a0a0;
+      min-height: 36px;
+      border: 1px solid #2a2a2a;
+      padding: 10px;
+      border-radius: 6px;
+      background: #0d0d0d;
+      margin-bottom: 12px;
+      word-break: break-all;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #ef4444;
+      color: white;
+      transition: opacity 0.2s;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+    }
+    
+    button:disabled {
+      background: #404040;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    
+    .message { 
+      color: #ff0066;
+      font-weight: 600;
+      margin-top: 12px;
+      text-align: center;
+      font-size: 0.85em;
+    }
+    
+    a { 
+      color: #3b82f6;
+      display: block;
+      margin-top: 15px;
+      font-size: 0.85em;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    a:hover {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h3><span class="brand">Block</span>Zone</h3>
+    <div class="subtitle">by hru hru studio</div>
+  </div>
+  <div class="container">
+    <h4>Block Current Site?</h4>
+    <p id="currentSite"></p>
+    <button id="blockBtn">Add to Blocklist</button>
+    <p id="message" class="message"></p>
+    <a href="#" id="optionsLink">Open Settings</a>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
